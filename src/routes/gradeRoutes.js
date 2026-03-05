@@ -22,7 +22,7 @@ router.get('/report-card/:studentId', getReportCard);
 router.post(
     '/',
     authorize('admin', 'teacher'),
-    [
+    validate([
         body('student').notEmpty().withMessage('Student ID is required'),
         body('course').notEmpty().withMessage('Course ID is required'),
         body('examType')
@@ -30,8 +30,7 @@ router.post(
             .withMessage('Exam type must be midterm, final, assignment, or quiz'),
         body('marks').isNumeric().withMessage('Marks must be a number'),
         body('totalMarks').isNumeric().withMessage('Total marks must be a number'),
-    ],
-    validate,
+    ]),
     addGrade
 );
 

@@ -18,7 +18,7 @@ router.get('/report/:studentId', getStudentReport);
 router.post(
     '/',
     authorize('admin', 'teacher'),
-    [
+    validate([
         body('records')
             .isArray({ min: 1 })
             .withMessage('Records must be a non-empty array'),
@@ -27,8 +27,7 @@ router.post(
         body('records.*.status')
             .isIn(['present', 'absent', 'late'])
             .withMessage('Status must be present, absent, or late'),
-    ],
-    validate,
+    ]),
     markAttendance
 );
 

@@ -22,11 +22,10 @@ router.get('/:id', getCourse);
 router.post(
     '/',
     authorize('admin'),
-    [
+    validate([
         body('name').trim().notEmpty().withMessage('Course name is required'),
         body('code').trim().notEmpty().withMessage('Course code is required'),
-    ],
-    validate,
+    ]),
     createCourse
 );
 
@@ -36,16 +35,14 @@ router.delete('/:id', authorize('admin'), deleteCourse);
 router.post(
     '/:id/enroll',
     authorize('admin', 'teacher'),
-    [body('studentId').notEmpty().withMessage('Student ID is required')],
-    validate,
+    validate([body('studentId').notEmpty().withMessage('Student ID is required')]),
     enrollStudent
 );
 
 router.post(
     '/:id/unenroll',
     authorize('admin', 'teacher'),
-    [body('studentId').notEmpty().withMessage('Student ID is required')],
-    validate,
+    validate([body('studentId').notEmpty().withMessage('Student ID is required')]),
     unenrollStudent
 );
 

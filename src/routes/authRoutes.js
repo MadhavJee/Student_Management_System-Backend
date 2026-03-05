@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post(
     '/register',
-    [
+    validate([
         body('name').trim().notEmpty().withMessage('Name is required'),
         body('email').isEmail().withMessage('Please enter a valid email'),
         body('password')
@@ -18,18 +18,16 @@ router.post(
             .optional()
             .isIn(['admin', 'teacher'])
             .withMessage('Role must be admin or teacher'),
-    ],
-    validate,
+    ]),
     register
 );
 
 router.post(
     '/login',
-    [
+    validate([
         body('email').isEmail().withMessage('Please enter a valid email'),
         body('password').notEmpty().withMessage('Password is required'),
-    ],
-    validate,
+    ]),
     login
 );
 
