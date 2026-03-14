@@ -41,7 +41,7 @@ const gradeSchema = new mongoose.Schema(
 );
 
 // Auto-calculate grade before saving
-gradeSchema.pre('save', function (next) {
+gradeSchema.pre('save', async function () {
     const percentage = (this.marks / this.totalMarks) * 100;
     if (percentage >= 95) this.grade = 'A+';
     else if (percentage >= 85) this.grade = 'A';
@@ -51,7 +51,6 @@ gradeSchema.pre('save', function (next) {
     else if (percentage >= 45) this.grade = 'C';
     else if (percentage >= 35) this.grade = 'D';
     else this.grade = 'F';
-    next();
 });
 
 module.exports = mongoose.model('Grade', gradeSchema);
